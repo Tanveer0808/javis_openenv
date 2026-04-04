@@ -1,0 +1,36 @@
+name: JarvisEnv
+version: 1.2.0
+description: A simulation-based dynamic virtual assistant OpenEnv environment utilizing goal conditions rather than sequential locking.
+
+observation_space:
+  type: Dict
+  spaces:
+    user_command:
+      type: Text
+    system_status:
+      type: Text
+    current_step:
+      type: Discrete
+    progress:
+      type: Continuous
+      bounds: [0.0, 1.0]
+
+action_space:
+  type: Dict
+  spaces:
+    action_type:
+      type: Categorical
+      categories: ["open_browser", "search_query", "play_video", "fetch_trending", "idle"]
+    parameters:
+      type: Dict
+
+tasks:
+  - id: easy
+    description: Open YouTube.
+    max_steps: 10
+  - id: medium
+    description: Search and play a video.
+    max_steps: 10
+  - id: hard
+    description: Play latest IPL highlights.
+    max_steps: 10

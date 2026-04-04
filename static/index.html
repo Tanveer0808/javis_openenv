@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>J.A.R.V.I.S. Core Interface</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <h1 class="glow-text">J.A.R.V.I.S.</h1>
+            <p class="subtitle">Interactive NLP Neural Environment</p>
+        </header>
+
+        <div class="main-content">
+            <!-- CONTROLS PANEL -->
+            <aside class="panel controls-panel glass-panel">
+                <h2 class="panel-title">Operations</h2>
+                <div class="task-selector">
+                    <label>Designate Protocol Objective:</label>
+                    <div class="button-group">
+                        <button class="btn task-btn" data-task="easy" data-mode="interactive">Initialize EASY</button>
+                        <button class="btn task-btn" data-task="medium" data-mode="interactive">Initialize MED</button>
+                        <button class="btn task-btn" data-task="hard" data-mode="interactive">Initialize HARD</button>
+                    </div>
+                </div>
+
+                <!-- NEW: NLP Interaction Panel -->
+                <div class="nlp-sandbox hidden" id="nlp-panel">
+                    <div class="progress-wrap">
+                        <label>Environment Progress Metric:</label>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-wrap">
+                        <label>NLP English Sandbox Command:</label>
+                        <input type="text" id="nlp-input" placeholder="e.g. 'Can you please open youtube?'" class="glass-input" disabled />
+                        <button class="btn submit-btn" id="nlp-submit" disabled>Transmit</button>
+                    </div>
+                </div>
+                
+                <div class="status-box">
+                    <h3>Sys Status: <span id="sys-status" class="status-online">AWAITING INITIALIZATION</span></h3>
+                </div>
+            </aside>
+
+            <!-- TERMINAL PANEL -->
+            <section class="panel terminal-panel glass-panel">
+                <div class="terminal-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="terminal-title">TERMINAL: RL Simulation Hook</span>
+                </div>
+                
+                <div class="terminal-body" id="terminal-output">
+                    <div class="log-line system-msg">> J.A.R.V.I.S System Initialized.</div>
+                    <div class="log-line system-msg">> Select an interaction mode using the operational panel.</div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <script src="/script.js"></script>
+</body>
+</html>
