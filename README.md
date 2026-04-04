@@ -1,16 +1,14 @@
-# Jarvis Virtual Assistant RL Environment
-
 ---
 title: Jarvis Environment
 emoji: 🤖
 colorFrom: blue
 colorTo: green
-sdk: gradio
-sdk_version: 4.0.0
-app_file: app.py
+sdk: docker
 pinned: false
 license: mit
 ---
+
+# Jarvis Virtual Assistant RL Environment
 
 This project implements a complete, submission-ready Reinforcement Learning environment mapped to an explicit Virtual Assistant logic track. It incorporates the precision-required OpenEnv specifications, grading protocols, and nested dataclasses modeled strictly for AI agent interaction.
 
