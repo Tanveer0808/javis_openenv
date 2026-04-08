@@ -129,6 +129,6 @@ class JarvisEnv:
         if self.state_data.progress >= 1.0:
             done = True
             info["reason"] = "goal_achieved"
-            reward += 0.2  # Final completion scaling hitting exactly 1.0 cumulatively
+            reward += 0.15  # Final completion scaling to keep total score strictly < 1.0 (approx 0.95)
 
         return self.state(), reward, done, info
