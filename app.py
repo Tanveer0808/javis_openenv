@@ -23,6 +23,65 @@ def load_tasks(config_path: str):
         config = yaml.safe_load(f)
     return config.get('tasks', [])
 
+@app.route('/reset', methods=['POST'])
+def openenv_reset():
+    """Provides a standard /reset POST endpoint for OpenEnv integration."""
+    data = request.get_json(silent=True) or {}
+    task_name = data.get('task_name', data.get('task', 'easy')).lower()
+    
+    env = JarvisEnv(task_name=task_name)
+    ACTIVE_SESSIONS['openenv_master'] = {
+        "env": env,
+        "task": task_name,
+        "accumulated_reward": 0.0,
+        "step_count": 0
+    }
+    
+    state = env.reset()
+    return jsonify(state)
+
+@app.route('/step', methods=['POST'])
+def openenv_step():
+    """Provides a standard /step POST endpoint for OpenEnv integration."""
+    data = request.get_json(silent=True) or {}
+    
+    session_data = ACTIVE_SESSIONS.get('openenv_master')
+    if not session_data:
+        env = JarvisEnv()
+        ACTIVE_SESSIONS['openenv_master'] = {
+            "env": env,
+            "task": "easy",
+            "accumulated_reward": 0.0,
+            "step_count": 0
+        }
+        session_data = ACTIVE_SESSIONS['openenv_master']
+        
+    env = session_data["env"]
+    
+    # Handle action whether wrapped in "action" key or direct
+    action_dict = data.get('action', data)
+    action_type = action_dict.get('action_type', 'idle')
+    parameters = action_dict.get('parameters', {})
+    
+    action = Action(action_type=action_type, parameters=parameters)
+    next_state, reward, done, info = env.step(action)
+    
+    session_data["accumulated_reward"] += reward
+    session_data["step_count"] += 1
+    
+    if done and "final_score" not in info:
+        info["final_score"] = evaluate_episode(session_data["task"], next_state, session_data["accumulated_reward"])
+        
+    # Send both observation and state keys just to be safe with standard formats
+    return jsonify({
+        "observation": next_state,
+        "obs": next_state,
+        "state": next_state,
+        "reward": float(reward),
+        "done": bool(done),
+        "info": info
+    })
+
 @app.route('/')
 def serve_index():
     return send_from_directory(app.static_folder, 'index.html')
