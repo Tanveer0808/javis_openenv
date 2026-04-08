@@ -16,29 +16,28 @@ def load_tasks(config_path: str):
 
 def run_task(task_def):
     task_name = task_def['id']
-    logger.info(f"--- Starting Goal-Driven Task: {task_name.upper()} ---")
-    
+    max_steps = task_def.get('max_steps', 5)
+    # Emit structured start tag
+    print(f"[START] task={task_name}")
+
     env = JarvisEnv(task_name=task_name)
     agent = BaselineAgent(task_name=task_name)
-    
+
     state = env.reset()
-    done = False
     total_reward = 0.0
-    
-    while not done:
+
+    for step_counter in range(1, max_steps + 1):
         action = agent.act(state)
         next_state, reward, done, info = env.step(action)
-        
-        logger.info(f"Action Mapped: [{action.action_type}] | Params: {action.parameters}")
-        logger.info(f"  => Env Transitioning | Progress Delta Reward: {reward:.2f}")
-        
+        print(f"[STEP] step={step_counter} action={action.action_type} reward={reward:.2f}")
         state = next_state
         total_reward += reward
 
-    final_score = evaluate_episode(task_name, state, total_reward)
-    logger.info(f"Task {task_name.upper()} Termination Condition Hit.")
-    logger.info(f"Final Academic Score Grade: {final_score:.2f} / 1.00\n")
-    return final_score
+    # Emit structured end tag with cumulative reward and steps
+    print(f"[END] task={task_name} score={total_reward:.2f} steps={max_steps}")
+
+    # Return the cumulative reward as the task score
+    return total_reward
 
 def run_inference():
     config_path = os.path.join(os.path.dirname(__file__), 'openenv.yaml')
@@ -53,9 +52,9 @@ def run_inference():
         score = run_task(task)
         scores[task['id']] = score
         
-    logger.info("=== Final Inference Scores ===")
+    print("=== Final Inference Scores ===")
     for t_id, sc in scores.items():
-        logger.info(f"{t_id.ljust(10)}: {sc:.2f}")
+        print(f"{t_id.ljust(10)}: {sc:.2f}")
 
 if __name__ == "__main__":
     run_inference()

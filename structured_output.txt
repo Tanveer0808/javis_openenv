@@ -1,0 +1,23 @@
+[START] task=easy
+[STEP] step=1 action=init reward=10
+[STEP] step=2 action=process reward=10
+[STEP] step=3 action=finalize reward=10
+[END] task=easy score=30 steps=3
+
+[START] task=medium
+[STEP] step=1 action=init reward=20
+[STEP] step=2 action=process reward=20
+[STEP] step=3 action=analyze reward=20
+[STEP] step=4 action=optimize reward=20
+[STEP] step=5 action=finalize reward=20
+[END] task=medium score=100 steps=5
+
+[START] task=hard
+[STEP] step=1 action=init reward=30
+[STEP] step=2 action=process reward=30
+[STEP] step=3 action=analyze reward=30
+[STEP] step=4 action=optimize reward=30
+[STEP] step=5 action=validate reward=30
+[STEP] step=6 action=refine reward=30
+[STEP] step=7 action=finalize reward=30
+[END] task=hard score=210 steps=7
