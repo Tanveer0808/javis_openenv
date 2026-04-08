@@ -1,9 +1,13 @@
 import os
+import sys
 import yaml
 import uuid
 import logging
 from dataclasses import asdict
 from flask import Flask, jsonify, send_from_directory, request
+
+# Add project root to sys.path to allow imports from env and agents
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from env.jarvis_env import JarvisEnv, Action
 from agents.baseline_agent import BaselineAgent
@@ -152,7 +156,10 @@ def handle_nlp_step():
         
     return jsonify(payload)
 
-if __name__ == '__main__':
+def main():
     port = int(os.environ.get("PORT", 7860))
     # Using threaded logic for smooth local execution and actution
     app.run(host='0.0.0.0', port=port, debug=True, threaded=True)
+
+if __name__ == '__main__':
+    main()

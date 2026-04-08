@@ -14,5 +14,5 @@ COPY . .
 # Environment variable for python path
 ENV PYTHONPATH=/app
 
-# Default command runs the Flask App
-CMD ["python", "app.py"]
+# Default command runs the Flask App from its new location
+CMD ["python", "server/app.py"]
