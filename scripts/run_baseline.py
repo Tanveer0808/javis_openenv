@@ -46,7 +46,7 @@ def run_task(task_def):
     return final_score
 
 if __name__ == "__main__":
-    config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'openenv.yaml')
+    config_path = os.path.join(os.path.dirname(__file__), '..', 'openenv.yaml')
     tasks = load_tasks(config_path)
     
     scores = {}

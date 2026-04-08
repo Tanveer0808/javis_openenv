@@ -41,7 +41,7 @@ def run_task(task_def):
     return final_score
 
 def run_inference():
-    config_path = os.path.join(os.path.dirname(__file__), 'config', 'openenv.yaml')
+    config_path = os.path.join(os.path.dirname(__file__), 'openenv.yaml')
     if not os.path.exists(config_path):
         logger.error(f"Config not found at {config_path}")
         return
